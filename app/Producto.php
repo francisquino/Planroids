@@ -8,4 +8,9 @@ class Producto extends Model
 {
     //
     protected $fillable = ['nombre'];
+
+    public function sustancias()
+    {
+        return $this->belongsToMany(Sustancia::class);
+    }
 }

@@ -8,4 +8,9 @@ class Sustancia extends Model
 {
     //
     protected $fillable = ['nombre', 'vidaMedia'];
+
+    public function productos()
+    {
+        return $this->belongsToMany(Producto::class);
+    }
 }
