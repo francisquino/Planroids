@@ -34,6 +34,7 @@
                     @if($producto->sustancias()->count())
                       @foreach($producto->sustancias as $sustancia)  
                         <tr>
+                          <td></td>
                           <td>{{$sustancia->nombre}}</td>
                         </tr>
                       @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Producto;
+use App\Sustancia;
 
 class ProductoController extends Controller
 {
@@ -39,9 +40,19 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[ 'nombre'=>'required']);
-        Producto::create($request->all());
-        return redirect()->route('producto.index')->with('success','Registro creado satisfactoriamente');
+        //$request->validate([ 'nombre'=>'required']);
+        //Producto::create($request->all());
+        //return redirect()->route('producto.index')->with('success','Registro creado satisfactoriamente');
+
+        $producto = Producto::create($request->only(['nombre']));
+        $sustancias = explode(",", $request->get('sustancias'));
+        $sustancia_ids = [];
+        foreach ($sustancias as $sustancia) {
+            $sustancia_db = Sustancia::where('nombre', trim($sustancia))->firstOrCreate(['nombre' => trim($sustancia)]);
+            $sustancia_ids[] = $sustancia_db->id;
+        }
+        $producto->sustancias()->attach($sustancia_ids);
+        return redirect()->route('Producto.index');
     }
 
     /**
