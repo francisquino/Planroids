@@ -11,6 +11,6 @@ class Producto extends Model
 
     public function sustancias()
     {
-        return $this->belongsToMany(Sustancia::class);
+        return $this->belongsToMany('App\Sustancia');
     }
 }

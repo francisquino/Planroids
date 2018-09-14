@@ -16,7 +16,7 @@ class SustanciaController extends Controller
     {
         //
         $sustancias=Sustancia::orderBy('id','DESC')->paginate(3);
-        return view('sustancia.index',compact('sustancias'));
+        return view('Sustancia.index',compact('sustancias'));
     }
 
     /**
@@ -27,7 +27,7 @@ class SustanciaController extends Controller
     public function create()
     {
         //
-        return view('sustancia.create');
+        return view('Sustancia.create');
     }
 
     /**
@@ -41,7 +41,7 @@ class SustanciaController extends Controller
         //
         $this->validate($request,[ 'nombre'=>'required', 'vidaMedia'=>'required']);
         Sustancia::create($request->all());
-        return redirect()->route('sustancia.index')->with('success','Registro creado satisfactoriamente');
+        return redirect()->route('Sustancia.index')->with('success','Registro creado satisfactoriamente');
     }
 
     /**
@@ -54,7 +54,7 @@ class SustanciaController extends Controller
     {
         //
         $sustancias=Sustancia::find($id);
-        return  view('sustancia.show',compact('sustancias'));
+        return  view('Sustancia.show',compact('sustancias'));
     }
 
     /**
@@ -67,7 +67,7 @@ class SustanciaController extends Controller
     {
         //
         $sustancia=Sustancia::find($id);
-        return view('sustancia.edit',compact('sustancia'));
+        return view('Sustancia.edit',compact('sustancia'));
     }
 
     /**
@@ -83,7 +83,7 @@ class SustanciaController extends Controller
         $this->validate($request,[ 'nombre'=>'required', 'vidaMedia'=>'required']);
  
         Sustancia::find($id)->update($request->all());
-        return redirect()->route('sustancia.index')->with('success','Registro actualizado satisfactoriamente');
+        return redirect()->route('Sustancia.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -96,6 +96,6 @@ class SustanciaController extends Controller
     {
         //
         Sustancia::find($id)->delete();
-        return redirect()->route('sustancia.index')->with('success','Registro eliminado satisfactoriamente');
+        return redirect()->route('Sustancia.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

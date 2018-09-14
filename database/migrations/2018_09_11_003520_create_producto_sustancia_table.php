@@ -18,6 +18,10 @@ class CreateProductoSustanciaTable extends Migration
             $table->integer('producto_id')->unsigned();
             $table->integer('sustancia_id')->unsigned();
             $table->timestamps();
+
+            $table->engine = 'InnoDB';              //Specify the table storage engine (MySQL): InnoDB o MyISAM.
+            $table->charset = 'utf8';               //Specify a default character set for the table (MySQL).
+            $table->collation = 'utf8_spanish_ci';  //Specify a default collation for the table (MySQL).            
         });
     }
 
