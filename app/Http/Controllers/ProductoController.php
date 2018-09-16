@@ -28,7 +28,8 @@ class ProductoController extends Controller
     public function create()
     {
         //
-        return view('Producto.create');
+        $sustancias=Sustancia::orderBy('id','ASC')->get();
+        return view('producto.create',compact('sustancias'));
     }
 
     /**
@@ -40,19 +41,32 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         //
-        //$request->validate([ 'nombre'=>'required']);
-        //Producto::create($request->all());
-        //return redirect()->route('producto.index')->with('success','Registro creado satisfactoriamente');
 
+        /*
+        //Mostrar el contenido de lo que nos pasan en $request 
+        print_r ($request->all());
+        echo("----");
+        dd(request()->all());
+        */
+
+        $request->validate(['nombre'=>'required']);
         $producto = Producto::create($request->only(['nombre']));
-        $sustancias = explode(",", $request->get('sustancias'));
+
+        /*$sustancias = explode(",", $request->get('sustancia'));
         $sustancia_ids = [];
         foreach ($sustancias as $sustancia) {
             $sustancia_db = Sustancia::where('nombre', trim($sustancia))->firstOrCreate(['nombre' => trim($sustancia)]);
             $sustancia_ids[] = $sustancia_db->id;
         }
-        $producto->sustancias()->attach($sustancia_ids);
-        return redirect()->route('Producto.index');
+        $producto->sustancias()->attach($sustancia_ids);*/
+
+
+        //$producto = Producto::find($id);
+
+        $producto->sustancias()->sync($request->input('sustancias'));
+
+        //return redirect()->route('producto.index');
+        return redirect()->route('producto.index')->with('success','Registro creado satisfactoriamente');
     }
 
     /**
@@ -65,7 +79,7 @@ class ProductoController extends Controller
     {
         //
         $productos=Producto::find($id);
-        return  view('Producto.show',compact('productos'));
+        return  view('producto.show',compact('productos'));
     }
 
     /**
@@ -78,7 +92,7 @@ class ProductoController extends Controller
     {
         //
         $producto=Producto::find($id);
-        return view('Producto.edit',compact('producto'));
+        return view('producto.edit',compact('producto'));
     }
 
     /**
@@ -94,7 +108,7 @@ class ProductoController extends Controller
         $this->validate($request,[ 'nombre'=>'required']);
  
         Producto::find($id)->update($request->all());
-        return redirect()->route('Producto.index')->with('success','Registro actualizado satisfactoriamente');
+        return redirect()->route('producto.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -107,6 +121,6 @@ class ProductoController extends Controller
     {
         //
         Producto::find($id)->delete();
-        return redirect()->route('Producto.index')->with('success','Registro eliminado satisfactoriamente');
+        return redirect()->route('producto.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

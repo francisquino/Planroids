@@ -34,6 +34,23 @@
 									</div>
 								</div>
 							</div>
+
+							{{-- Lista de sustancias --}}
+							<div class="form-group">
+								<h3>Sustancias disponibles</h3>
+
+								@if($sustancias->count())
+									@foreach($sustancias as $sustancia)
+									    <div class="checkbox">
+									        <label>
+									            <input type="checkbox" name="sustancias[]" value="{{ $sustancia->id }}">
+									            {{ $sustancia->nombre }}
+									        </label>
+									    </div>
+									@endforeach
+								@endif
+							</div>
+
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-12">
 									<input type="submit"  value="Guardar" class="btn btn-success btn-block">
